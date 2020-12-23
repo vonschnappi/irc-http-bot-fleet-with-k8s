@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bot-sharon
+  labels:
+    app: bot-sharon
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bot-sharon
+  template:
+    metadata:
+      labels:
+        app: bot-sharon
+    spec:
+      containers:
+      - name: bot-sharon
+        imagePullPolicy: Never
+        image: irc-http
+        ports:
+        - containerPort: 3000
+        env:
+        - name: IRC_HOST
+          value: chat.freenode.net
+        - name: IRC_PORT
+          value: "6667"
+        - name: IRC_NICK
+          value: bot-sharon
+        - name: IRC_CHANNEL
+          value: hackeriet  
+        - name: DEBUG
+          value: "1" 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bot-sharon-service
+spec:
+  selector:
+    app: bot-sharon
+  type: LoadBalancer  
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+      nodePort: 32691

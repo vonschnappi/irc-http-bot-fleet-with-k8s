@@ -1,0 +1,23 @@
+{
+  "name": "irc-http",
+  "version": "0.3.1",
+  "description": "Simple IRC operations over HTTP",
+  "repository": "https://github.com/hackeriet/irc-http",
+  "keywords": [
+    "irc",
+    "bot",
+    "http",
+    "rest"
+  ],
+  "bin": "bin/irc-http",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node bin/irc-http"
+  },
+  "author": "stigok",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3"
+  }
+}

@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bot-{name}
+  labels:
+    app: bot-{name}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bot-{name}
+  template:
+    metadata:
+      labels:
+        app: bot-{name}
+    spec:
+      containers:
+      - name: bot-{name}
+        imagePullPolicy: Never
+        image: irc-http
+        ports:
+        - containerPort: 3000
+        env:
+        - name: IRC_HOST
+          value: chat.freenode.net
+        - name: IRC_PORT
+          value: "6667"
+        - name: IRC_NICK
+          value: bot-{name}
+        - name: IRC_CHANNEL
+          value: hackeriet  
+        - name: DEBUG
+          value: "1" 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bot-{name}-service
+spec:
+  selector:
+    app: bot-{name}
+  type: LoadBalancer  
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+      nodePort: {node_port}
