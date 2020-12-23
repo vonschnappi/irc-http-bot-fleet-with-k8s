@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: irc-bot
+  labels:
+    app: irc-bot
+spec:
+  ports:
+  - port: 3000
+    name: irc-bot
+  selector:
+    app: irc-bot
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: irc-bot
+spec:
+  serviceName: "irc-bot"
+  replicas: 5
+  selector:
+    matchLabels:
+      app: irc-bot
+  template:
+    metadata:
+      labels:
+        app: irc-bot
+    spec:
+      containers:
+      - name: irc-bot
+        imagePullPolicy: Never
+        image: irc-http
+        ports:
+        - containerPort: 3000
+          name: irc-bot
+        env:
+          - name: IRC_HOST
+            value: chat.freenode.net
+          - name: IRC_PORT
+            value: "6667"
+          - name: IRC_NICK
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: IRC_CHANNEL
+            value: hackeriet  
+          - name: DEBUG
+            value: "1" 

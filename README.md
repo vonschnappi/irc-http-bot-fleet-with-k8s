@@ -15,6 +15,9 @@ As mentioned above, you need docker, kubectl and minikube installed.
 You can run the `init.sh` script in the ks folder to initialize your environment. You need sudo permissions to do so.
 
 ## Deploying the bots
+There are two way to deploy the bots:
+
+### Creating individual bots
 There's a `deploy_bots.sh` script in the ks folder. This script performs the following:
 1. Builds the irc-http docker image.
 1. Creats a batch of .yaml config files for each bot.
@@ -34,9 +37,15 @@ bot-sharon-service 10.107.156.228
 kubernetes 10.96.0.1
 =================================================
 ```
-
 You can use these IPs to test the bots API.
 
+### Creating several both in one service using stateFulSet
+
+You can simply run `kubectl apply -f deploy_stateful.yaml`
+
+Then `kubectl get service | grep bot | tr -s ' ' | cut -d ' ' -f -1,3`
+
+To get the service and it IP address
 
 ## Cleaning up
 There's a `clean_up.sh` script in the ks folder. This script gets the services and deployments for all bots and deletes them.

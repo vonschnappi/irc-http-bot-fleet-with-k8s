@@ -42,5 +42,5 @@ done
 
 echo "================================================="
 echo "These are the service bots with their local IPs:"
-kubectl get service | tr -s ' ' | cut -d ' ' -f -1,3
+kubectl get service | grep bot | tr -s ' ' | cut -d ' ' -f -1,3
 echo "================================================="
