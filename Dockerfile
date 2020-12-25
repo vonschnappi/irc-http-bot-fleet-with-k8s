@@ -1,5 +1,5 @@
 FROM node:6.12-alpine
-WORKDIR /usr/src/app
+WORKDIR /
 COPY package.json package-lock.json ./
 RUN npm install --production
 

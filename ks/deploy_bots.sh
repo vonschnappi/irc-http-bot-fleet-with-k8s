@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Building docker image..."
-docker build --tag irc-http
+docker build --tag irc-http .
 
 nicknames=(david sarah joe sharon mike jennifer)
 in_use_node_ports=()
